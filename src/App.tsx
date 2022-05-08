@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import MaimMenu from "./components/MainMenu/MainMenu";
+import GameField from "./components/GameField/GameField";
+import {useState} from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export interface MyOptionType {
+    value: string | number;
+    label: string
+};
+
+const App = () => {
+    const [size, setSize] = useState({value: 7, label: '7х7'})
+    const [difficulty, setDifficulty] = useState({value: 'MEDIUM', label: 'MEDIUM'})
+
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <MaimMenu
+                            changeSize={setSize}
+                            changeDifficulty={setDifficulty}
+                            size={size}
+                            difficulty={difficulty}
+                        />
+                    }
+                />
+                <Route
+                    path="game"
+                    element={
+                        <GameField
+                            size={size.value}
+                        />
+                    }/>
+                <Route
+                    path="*"
+                    element={<Navigate to="/" replace/>}
+                />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
