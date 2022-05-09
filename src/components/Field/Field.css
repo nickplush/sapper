@@ -1,0 +1,65 @@
+.cell {
+    height: 100%;
+    width: 100%;
+}
+
+.mask {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.mask_0 {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.mask_1 {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.mask:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.hidden {
+    background: rgb(127, 253, 127);
+    width: 100%;
+    height: 100%;
+}
+
+.open {
+    font-weight: bold;
+    background: #fcc56f;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.number_0 {
+    color: grey;
+}
+
+.number_1 {
+    color: blue;
+}
+
+.number_2 {
+    color: green;
+}
+
+.number_3 {
+    color: red;
+}
+
+.number_4 {
+    color: #000042;
+}

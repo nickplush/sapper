@@ -1,0 +1,28 @@
+.page-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    flex-grow: 1
+}
+
+.options-menu-container {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.refresh-button {
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.refresh-button :hover {
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    -webkit-box-shadow: rgba(0,0,0,0.8) 0 0 10px;
+    -moz-box-shadow: rgba(0,0,0,0.8) 0 0 10px;
+}

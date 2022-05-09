@@ -1,9 +1,9 @@
 import {MyOptionType} from "../../App";
 
 export const gameDifficultyOptions: MyOptionType[] = [
-    {value: 'EASY', label: 'EASY'},
-    {value: 'MEDIUM', label: 'MEDIUM'},
-    {value: 'HARD', label: 'HARD'}
+    {value: 8, label: 'EASY'},
+    {value: 6, label: 'MEDIUM'},
+    {value: 4, label: 'HARD'}
 ];
 
 export const sizeOptions: MyOptionType[] = [
