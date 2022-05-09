@@ -28,6 +28,7 @@
 }
 
 .open {
+    font-size: 75%;
     font-weight: bold;
     background: #fcc56f;
     width: 100%;

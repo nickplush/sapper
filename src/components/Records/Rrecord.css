@@ -1,0 +1,14 @@
+.record {
+    background: #fcc56f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.content {
+    text-align: center;
+    width: 100%;
+    background: #ffd6a1;
+    font-size: 40px;
+}

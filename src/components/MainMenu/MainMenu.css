@@ -1,0 +1,32 @@
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.menu-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 33%;
+}
+
+.menu-item {
+    margin: 20px;
+}
+
+.play-button {
+    padding: 10px 0 10px 0;
+    text-align: center;
+    width: 100%;
+    background: #000042;
+
+}
+
+.link {
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+    color: white!important;
+}

@@ -36,8 +36,8 @@ const GamePage: React.FC<GameFieldProps> = ({size, difficulty}) => {
     useEffect(() => {
         if (arrayOfCells.length) {
             const isGameEnd = arrayOfCells.some(item => !item.isBomb && !item.isOpen)
-            if (!isGameEnd && isGameEnding) {
-                endGame()
+            if (!isGameEnd && !isGameEnding) {
+                endGame(true)
             }
         }
     }, [arrayOfCells])
@@ -58,7 +58,17 @@ const GamePage: React.FC<GameFieldProps> = ({size, difficulty}) => {
 
     }
 
-    const endGame = () => {
+    const saveRecord = () => {
+        const oldRecord: number | null = localStorage.record
+        if (!oldRecord || oldRecord < time) {
+            localStorage.record = time
+        }
+    }
+
+    const endGame = (isWin: boolean) => {
+        if (isWin){
+            saveRecord()
+        }
         setIsGameEnding(true)
         openField()
         clearInterval(countRef.current)
@@ -90,7 +100,7 @@ const GamePage: React.FC<GameFieldProps> = ({size, difficulty}) => {
 
     const clickOnCell = (index: number) => {
         if (arrayOfCells[index].isBomb || isGameEnding) {
-            endGame()
+            endGame(false)
         } else {
             if (!isGameStarted) {
                 setIsGameStarted(true)
