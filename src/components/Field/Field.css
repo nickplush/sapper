@@ -1,6 +1,10 @@
 .cell {
     height: 100%;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8vw;
 }
 
 .mask {
@@ -28,7 +32,6 @@
 }
 
 .open {
-    font-size: 75%;
     font-weight: bold;
     background: #fcc56f;
     width: 100%;

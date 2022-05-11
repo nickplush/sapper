@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react"
-import { BiRefresh } from "react-icons/bi";
+import {BiRefresh} from "react-icons/bi";
 import {AiFillHome} from "react-icons/ai";
 import Field from "../Field/Field";
 import {findAndUpdateNearestCells, formatTime} from "./helpers";
@@ -17,7 +17,8 @@ export interface Cell {
     y: number,
     isBomb: boolean,
     isOpen: boolean,
-    bombNumber: number
+    bombNumber: number,
+    isFlag: boolean
 }
 
 const GamePage: React.FC<GameFieldProps> = ({size, difficulty}) => {
@@ -35,7 +36,7 @@ const GamePage: React.FC<GameFieldProps> = ({size, difficulty}) => {
 
     useEffect(() => {
         if (arrayOfCells.length) {
-            const isGameEnd = arrayOfCells.some(item => !item.isBomb && !item.isOpen)
+            const isGameEnd = arrayOfCells.some(item => !item.isFlag && !item.isBomb && !item.isOpen)
             if (!isGameEnd && !isGameEnding) {
                 endGame(true)
             }
@@ -55,7 +56,6 @@ const GamePage: React.FC<GameFieldProps> = ({size, difficulty}) => {
         setIsGameStarted(false)
         setTime(0)
         clearInterval(countRef.current)
-
     }
 
     const saveRecord = () => {
@@ -66,7 +66,7 @@ const GamePage: React.FC<GameFieldProps> = ({size, difficulty}) => {
     }
 
     const endGame = (isWin: boolean) => {
-        if (isWin){
+        if (isWin) {
             saveRecord()
         }
         setIsGameEnding(true)
@@ -78,7 +78,7 @@ const GamePage: React.FC<GameFieldProps> = ({size, difficulty}) => {
         const newFieldArr: Cell[] = []
         for (let y = 0; y < size; y++) {
             for (let x = 0; x < size; x++) {
-                newFieldArr.push({x, y, bombNumber: 0, isBomb: false, isOpen: false})
+                newFieldArr.push({x, y, bombNumber: 0, isBomb: false, isOpen: false, isFlag: false})
             }
         }
         generateBombs(newFieldArr)
@@ -97,34 +97,44 @@ const GamePage: React.FC<GameFieldProps> = ({size, difficulty}) => {
         }
     }
 
-
     const clickOnCell = (index: number) => {
-        if (arrayOfCells[index].isBomb || isGameEnding) {
-            endGame(false)
-        } else {
-            if (!isGameStarted) {
-                setIsGameStarted(true)
-                handleStart()
+        if (!arrayOfCells[index].isFlag) {
+            if (arrayOfCells[index].isBomb || isGameEnding) {
+                endGame(false)
+            } else {
+                if (!isGameStarted) {
+                    setIsGameStarted(true)
+                    handleStart()
+                }
+                const cells = [...arrayOfCells]
+                arrayOfCells[index].isOpen = true
+                if (arrayOfCells[index].bombNumber === 0) {
+                    findAndUpdateNearestCells(index, size, cells, false)
+                }
+                setArrayOfCells(cells)
             }
+        }
+    }
+
+    const setOrDropFlag = (index: number, e: React.MouseEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        if (!isGameEnding) {
             const cells = [...arrayOfCells]
-            arrayOfCells[index].isOpen = true
-            if (arrayOfCells[index].bombNumber === 0) {
-                findAndUpdateNearestCells(index, size, cells, false)
-            }
+            cells[index].isFlag = !cells[index].isFlag
             setArrayOfCells(cells)
         }
     }
 
     const openField = () => {
-        const field = [...arrayOfCells].map(item => ({...item, isOpen: item.isBomb || item.isOpen}))
+        const field = [...arrayOfCells].map(item => ({...item, isOpen: (item.isBomb && !item.isFlag) || item.isOpen}))
         setArrayOfCells(field)
     }
 
     return (
         <div className='page-container'>
-            <Field clickOnCell={clickOnCell} arrayOfCells={arrayOfCells} size={size}/>
+            <Field clickOnCell={clickOnCell} setOrDropFlag={setOrDropFlag} arrayOfCells={arrayOfCells} size={size}/>
             <div className='options-menu-container'>
-                <div >{formatTime(time)}</div>
+                <div>{formatTime(time)}</div>
                 <div className='refresh-button'>
                     <BiRefresh size={'100%'} onClick={restartGame}/>
                 </div>

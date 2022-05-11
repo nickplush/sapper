@@ -15,6 +15,7 @@ export const findAndUpdateNearestCells = (index: number, size: number, array: an
             array[position].bombNumber++
         } else {
             array[position].isOpen = true
+            array[position].isFlag = false
             if (array[position].bombNumber === 0) {
                 findAndUpdateNearestCells(position, size, array, false)
             }
@@ -31,8 +32,8 @@ export const formatTime = (timer: number) => {
     return `${getHours} : ${getMinutes} : ${getSeconds}`
 }
 export const generateGridStyle = (size: number) => ({
-    height: '90vh',
-    width: '90vh',
+    height: '85vh',
+    width: '85vh',
     display: 'grid',
     gridTemplateColumns: `repeat(${size}, 1fr)`,
     gridTemplateRows: `repeat(${size}, 1fr)`,
